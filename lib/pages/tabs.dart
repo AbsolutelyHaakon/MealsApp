@@ -8,28 +8,26 @@ import 'package:meals_app/widgets/drawer.dart';
 import 'package:meals_app/providers/favorites_provider.dart';
 import 'package:meals_app/providers/filters_provider.dart';
 
-const kInitialFilters = {
-  Filter.glutenFree: false,
-  Filter.lactoseFree: false,
-  Filter.vegetarian: false,
-  Filter.vegan: false
-};
-
 class TabsScreen extends ConsumerStatefulWidget {
-  const TabsScreen({super.key});
+  const TabsScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<TabsScreen> createState() {
-    return _TabsScreenState();
-  }
+  _TabsScreenState createState() => _TabsScreenState();
 }
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
+  bool _showImages = true;
 
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
+    });
+  }
+
+  void _toggleView() {
+    setState(() {
+      _showImages = !_showImages;
     });
   }
 
@@ -50,6 +48,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
     Widget activePage = CategoriesScreen(
       availableMeals: availableMeals,
+      showImages: _showImages,
     );
     var activePageTitle = 'Categories';
 
@@ -64,6 +63,14 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(activePageTitle),
+        actions: _selectedPageIndex == 0
+            ? [
+                IconButton(
+                  icon: Icon(_showImages ? Icons.list : Icons.image),
+                  onPressed: _toggleView,
+                ),
+              ]
+            : null,
       ),
       drawer: MainDrawer(
         onSelectScreen: _setScreen,
