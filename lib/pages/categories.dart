@@ -6,28 +6,31 @@ import 'package:meals_app/widgets/category_grid_item.dart';
 import 'package:meals_app/pages/meals.dart';
 import 'package:meals_app/models/category.dart';
 
+// StatefulWidget for displaying categories.
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({
     super.key,
-    required this.availableMeals,
-    required this.showImages,
+    required this.availableMeals, // List of available meals.
+    required this.showImages, // Flag to show images or not.
   });
 
-  final List<Meal> availableMeals;
-  final bool showImages;
+  final List<Meal> availableMeals; // List of meals available.
+  final bool showImages; // Boolean to determine if images should be shown.
 
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
 
+// State class for CategoriesScreen.
 class _CategoriesScreenState extends State<CategoriesScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
+  late AnimationController _animationController; // Controller for animations.
 
   @override
   void initState() {
     super.initState();
 
+    // Initialize the animation controller.
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -35,15 +38,16 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       upperBound: 1,
     );
 
-    _animationController.forward();
+    _animationController.forward(); // Start the animation.
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController.dispose(); // Dispose the animation controller.
     super.dispose();
   }
 
+  // Method to handle category selection.
   void _selectCategory(BuildContext context, Category category) {
     final filteredMeals = widget.availableMeals
         .where((meal) => meal.categories.contains(category.id))
@@ -65,35 +69,35 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       animation: _animationController,
       child: widget.showImages
           ? GridView(
-              padding: const EdgeInsets.all(24),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 3 / 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-              ),
-              children: [
-                for (final category in availableCategories)
-                  CategoryGridItem(
-                    category: category,
-                    onSelectCategory: () {
-                      _selectCategory(context, category);
-                    },
-                  )
-              ],
+        padding: const EdgeInsets.all(24),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 3 / 2,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+        ),
+        children: [
+          for (final category in availableCategories)
+            CategoryGridItem(
+              category: category,
+              onSelectCategory: () {
+                _selectCategory(context, category);
+              },
             )
+        ],
+      )
           : ListView(
-              padding: const EdgeInsets.all(24),
-              children: [
-                for (final category in availableCategories)
-                  ListTile(
-                    title: Text(category.title),
-                    onTap: () {
-                      _selectCategory(context, category);
-                    },
-                  )
-              ],
-            ),
+        padding: const EdgeInsets.all(24),
+        children: [
+          for (final category in availableCategories)
+            ListTile(
+              title: Text(category.title),
+              onTap: () {
+                _selectCategory(context, category);
+              },
+            )
+        ],
+      ),
       builder: (context, child) => SlideTransition(
         position: Tween(
           begin: const Offset(0, 0.3),

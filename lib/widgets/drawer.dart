@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
+// A widget that represents the main navigation drawer.
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key, required this.onSelectScreen});
 
-  final void Function(String identifier) onSelectScreen;
+  final void Function(String identifier) onSelectScreen; // Callback for screen selection.
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
+          // Drawer header with a gradient background and title.
           DrawerHeader(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -42,6 +44,7 @@ class MainDrawer extends StatelessWidget {
               ],
             ),
           ),
+          // List tile for navigating to the meals screen.
           ListTile(
             leading: Icon(
               Icons.restaurant,
@@ -56,9 +59,10 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              onSelectScreen('meals');
+              onSelectScreen('meals'); // Trigger the callback with 'meals' identifier.
             },
           ),
+          // List tile for navigating to the filters screen.
           ListTile(
             leading: Icon(
               Icons.settings,
@@ -73,7 +77,7 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              onSelectScreen('filters');
+              onSelectScreen('filters'); // Trigger the callback with 'filters' identifier.
             },
           ),
         ],

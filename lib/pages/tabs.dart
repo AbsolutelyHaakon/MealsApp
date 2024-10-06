@@ -8,6 +8,7 @@ import 'package:meals_app/widgets/drawer.dart';
 import 'package:meals_app/providers/favorites_provider.dart';
 import 'package:meals_app/providers/filters_provider.dart';
 
+// Main screen with tabs for categories and favorites.
 class TabsScreen extends ConsumerStatefulWidget {
   const TabsScreen({Key? key}) : super(key: key);
 
@@ -16,21 +17,24 @@ class TabsScreen extends ConsumerStatefulWidget {
 }
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
-  int _selectedPageIndex = 0;
-  bool _showImages = true;
+  int _selectedPageIndex = 0; // Index of the currently selected tab.
+  bool _showImages = true; // Flag to toggle between image and list view.
 
+  // Method to select a tab.
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
   }
 
+  // Method to toggle between image and list view.
   void _toggleView() {
     setState(() {
       _showImages = !_showImages;
     });
   }
 
+  // Method to navigate to a different screen.
   void _setScreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
@@ -44,14 +48,17 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Watch the filtered meals from the provider.
     final availableMeals = ref.watch(filteredMealsProvider);
 
+    // Default active page is the categories screen.
     Widget activePage = CategoriesScreen(
       availableMeals: availableMeals,
       showImages: _showImages,
     );
     var activePageTitle = 'Categories';
 
+    // If the selected tab is favorites, show the favorites screen.
     if (_selectedPageIndex == 1) {
       final favoriteMeals = ref.watch(favoriteMealsProvider);
       activePage = MealsScreen(
@@ -62,23 +69,23 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(activePageTitle),
+        title: Text(activePageTitle), // Title of the app bar.
         actions: _selectedPageIndex == 0
             ? [
                 IconButton(
-                  icon: Icon(_showImages ? Icons.list : Icons.image),
+                  icon: Icon(_showImages ? Icons.list : Icons.image), // Icon to toggle view.
                   onPressed: _toggleView,
                 ),
               ]
             : null,
       ),
       drawer: MainDrawer(
-        onSelectScreen: _setScreen,
+        onSelectScreen: _setScreen, // Drawer for navigation.
       ),
-      body: activePage,
+      body: activePage, // Body of the scaffold.
       bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
-        currentIndex: _selectedPageIndex,
+        onTap: _selectPage, // Method to select a tab.
+        currentIndex: _selectedPageIndex, // Current selected tab index.
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.set_meal),
