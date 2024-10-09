@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/pages/categories.dart';
 import 'package:meals_app/pages/filters.dart';
 import 'package:meals_app/pages/meals.dart';
+import 'package:meals_app/pages/shopping_cart.dart';
 import 'package:meals_app/widgets/drawer.dart';
 import 'package:meals_app/providers/favorites_provider.dart';
 import 'package:meals_app/providers/filters_provider.dart';
@@ -41,6 +42,12 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
           builder: (ctx) => const FiltersScreen(),
+        ),
+      );
+    } else if (identifier == 'shopping_cart') {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const ShoppingCartScreen(),
         ),
       );
     }
