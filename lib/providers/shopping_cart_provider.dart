@@ -10,4 +10,8 @@ class ShoppingCartNotifier extends StateNotifier<List<String>> {
   void addIngredients(List<String> ingredients) {
     state = [...state, ...ingredients];
   }
+
+  void removeIngredient(String ingredient) {
+    state = state.where((item) => item != ingredient).toList();
+  }
 }

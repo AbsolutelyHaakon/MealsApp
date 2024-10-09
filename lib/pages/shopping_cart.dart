@@ -18,6 +18,12 @@ class ShoppingCartScreen extends ConsumerWidget {
         itemBuilder: (ctx, index) {
           return ListTile(
             title: Text(shoppingCart[index]),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                ref.read(shoppingCartProvider.notifier).removeIngredient(shoppingCart[index]);
+              },
+            ),
           );
         },
       ),
