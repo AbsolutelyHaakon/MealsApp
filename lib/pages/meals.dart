@@ -8,12 +8,12 @@ import 'package:meals_app/widgets/meal_item.dart';
 class MealsScreen extends StatefulWidget {
   const MealsScreen({
     super.key,
-    this.title, // Optional title for the screen.
-    required this.meals, // List of meals to display.
-  });
+    String? title, // Optional title for the screen.
+    required List<Meal> meals, // List of meals to display.
+  }) : _meals = meals, _title = title;
 
-  final String? title; // Title of the screen.
-  final List<Meal> meals; // List of meal objects.
+  final String? _title; // Title of the screen.
+  final List<Meal> _meals; // List of meal objects.
 
   @override
   _MealsScreenState createState() => _MealsScreenState();
@@ -23,7 +23,7 @@ class _MealsScreenState extends State<MealsScreen> {
   bool _showImages = true; // Flag to toggle between image and list view.
 
   // Method to navigate to the meal details screen.
-  void selectMeal(BuildContext context, Meal meal) {
+  void _selectMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealDetailsScreen(
@@ -58,23 +58,23 @@ class _MealsScreenState extends State<MealsScreen> {
     );
 
     // If there are meals, display them in a list or grid.
-    if (widget.meals.isNotEmpty) {
+    if (widget._meals.isNotEmpty) {
       content = ListView.builder(
-        itemCount: widget.meals.length,
+        itemCount: widget._meals.length,
         itemBuilder: (ctx, index) {
-          final meal = widget.meals[index];
+          final meal = widget._meals[index];
           return _showImages
               ? MealItem(
                   meal: meal,
                   onSelectMeal: (meal) {
-                    selectMeal(context, meal);
+                    _selectMeal(context, meal);
                   },
                 )
               : ListTile(
                   title: Text(meal.title),
                   subtitle: Text('${meal.duration} min - ${meal.complexityText} - ${meal.affordabilityText}'),
                   onTap: () {
-                    selectMeal(context, meal);
+                    _selectMeal(context, meal);
                   },
                 );
         },
@@ -82,14 +82,14 @@ class _MealsScreenState extends State<MealsScreen> {
     }
 
     // If there is no title, return the content directly.
-    if (widget.title == null) {
+    if (widget._title == null) {
       return content;
     }
 
     // Return a scaffold with an app bar and the content.
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title!), // Title of the app bar.
+        title: Text(widget._title!), // Title of the app bar.
         actions: [
           IconButton(
             icon: Icon(_showImages ? Icons.list : Icons.image), // Icon to toggle view.

@@ -10,12 +10,12 @@ import 'package:meals_app/models/category.dart';
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({
     super.key,
-    required this.availableMeals, // List of available meals.
-    required this.showImages, // Flag to show images or not.
-  });
+    required List<Meal> availableMeals, // List of available meals.
+    required bool showImages, // Flag to show images or not.
+  }) : _showImages = showImages, _availableMeals = availableMeals;
 
-  final List<Meal> availableMeals; // List of meals available.
-  final bool showImages; // Boolean to determine if images should be shown.
+  final List<Meal> _availableMeals; // List of meals available.
+  final bool _showImages; // Boolean to determine if images should be shown.
 
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
@@ -49,7 +49,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
   // Method to handle category selection.
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals = widget.availableMeals
+    final filteredMeals = widget._availableMeals
         .where((meal) => meal.categories.contains(category.id))
         .toList();
 
@@ -67,7 +67,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animationController,
-      child: widget.showImages
+      child: widget._showImages
           ? GridView(
         padding: const EdgeInsets.all(24),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
