@@ -7,7 +7,7 @@ This project is a part of the IDATA2503 course at NTNU Ålesund. The app allows 
 
 ## Screenshots
 <div style="display: flex; gap: 10px;">
-    <img src="screenshots/IMG_5864.PNG" alt="Screenshot 1" width="300"/>
-    <img src="screenshots/IMG_5865.PNG" alt="Screenshot 2" width="300"/>
-    <img src="screenshots/IMG_5866.PNG" alt="Screenshot 3" width="300"/>
+    <img src="screenshots/IMG_5864.PNG" alt="Screenshot 1" width="250"/>
+    <img src="screenshots/IMG_5865.PNG" alt="Screenshot 2" width="250"/>
+    <img src="screenshots/IMG_5866.PNG" alt="Screenshot 3" width="250"/>
 </div>
