@@ -31,13 +31,52 @@ class CategoryGridItem extends StatelessWidget {
             end: Alignment.bottomRight, // Gradient end position.
           ),
         ),
-        child: Text(
-          category.title, // Category title.
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-            color: Theme.of(context).colorScheme.onBackground, // Text color.
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              _getCategoryIcon(category.id), // Get the appropriate icon.
+              size: 48,
+              color: Theme.of(context).colorScheme.onBackground, // Icon color.
+            ),
+            const SizedBox(height: 10),
+            Text(
+              category.title, // Category title.
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground, // Text color.
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  IconData _getCategoryIcon(String categoryId) {
+    switch (categoryId) {
+      case 'c1':
+        return Icons.local_pizza; // Italian
+      case 'c2':
+        return Icons.timer; // Quick and Easy
+      case 'c3':
+        return Icons.fastfood; // Hamburger
+      case 'c4':
+        return Icons.restaurant; // German
+      case 'c5':
+        return Icons.local_cafe; // Light & Lovely
+      case 'c6':
+        return Icons.public; // Exotic
+      case 'c7':
+        return Icons.breakfast_dining; // Breakfast
+      case 'c8':
+        return Icons.rice_bowl; // Asian
+      case 'c9':
+        return Icons.cake; // French
+      case 'c10':
+        return Icons.wb_sunny; // Summer
+      default:
+        return Icons.circle; // Default icon
+    }
   }
 }

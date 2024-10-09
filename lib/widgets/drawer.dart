@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -28,13 +29,13 @@ class MainDrawer extends StatelessWidget {
             child: Row(
               children: [
                 Icon(
-                  Icons.fastfood,
+                  CupertinoIcons.app,
                   size: 48,
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(width: 18),
                 Text(
-                  'Cooking Up!',
+                  'Meals App', // Change this to your app name
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -42,9 +43,9 @@ class MainDrawer extends StatelessWidget {
               ],
             ),
           ),
-          ListTile(
+          CupertinoListTile(
             leading: Icon(
-              Icons.restaurant,
+              CupertinoIcons.home,
               size: 26,
               color: Theme.of(context).colorScheme.onBackground,
             ),
@@ -59,9 +60,9 @@ class MainDrawer extends StatelessWidget {
               onSelectScreen('meals');
             },
           ),
-          ListTile(
+          CupertinoListTile(
             leading: Icon(
-              Icons.settings,
+              CupertinoIcons.settings,
               size: 26,
               color: Theme.of(context).colorScheme.onSurface,
             ),
@@ -76,9 +77,9 @@ class MainDrawer extends StatelessWidget {
               onSelectScreen('filters');
             },
           ),
-          ListTile(
+          CupertinoListTile(
             leading: Icon(
-              Icons.shop,
+              CupertinoIcons.shopping_cart,
               size: 26,
               color: Theme.of(context).colorScheme.onSurface,
             ),
@@ -94,6 +95,37 @@ class MainDrawer extends StatelessWidget {
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CupertinoListTile extends StatelessWidget {
+  const CupertinoListTile({
+    super.key,
+    required this.leading,
+    required this.title,
+    required this.onTap,
+  });
+
+  final Widget leading;
+  final Widget title;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        child: Row(
+          children: [
+            leading,
+            const SizedBox(width: 16),
+            Expanded(child: title),
+          ],
+        ),
       ),
     );
   }
