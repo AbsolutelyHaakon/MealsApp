@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/providers/favorites_provider.dart';
 import 'package:meals_app/providers/shopping_cart_provider.dart';
+import 'package:meals_app/pages/shopping_cart.dart'; // Import the ShoppingCartScreen
 
 // Screen for displaying meal details.
 class MealDetailsScreen extends ConsumerWidget {
@@ -50,7 +51,17 @@ class MealDetailsScreen extends ConsumerWidget {
                 key: ValueKey(isFavorite),
               ),
             ),
-          )
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ShoppingCartScreen(),
+                ),
+              );
+            },
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -82,6 +93,18 @@ class MealDetailsScreen extends ConsumerWidget {
                 ),
               ),
             const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                ref.read(shoppingCartProvider.notifier).addIngredients(meal.ingredients);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Ingredients added to shopping cart.'),
+                  ),
+                );
+              },
+              child: const Text('Add Ingredients to Cart'),
+            ),
+            const SizedBox(height: 24),
             Text(
               'Steps',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -105,17 +128,6 @@ class MealDetailsScreen extends ConsumerWidget {
                 ),
               ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                ref.read(shoppingCartProvider.notifier).addIngredients(meal.ingredients);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Ingredients added to shopping cart.'),
-                  ),
-                );
-              },
-              child: const Text('Add Ingredients to Shopping Cart'),
-            ),
           ],
         ),
       ),
