@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/providers/favorites_provider.dart';
+import 'package:meals_app/providers/shopping_cart_provider.dart';
 
 // Screen for displaying meal details.
 class MealDetailsScreen extends ConsumerWidget {
@@ -15,19 +16,15 @@ class MealDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Watch the list of favorite meals from the provider.
     final favoriteMeals = ref.watch(favoriteMealsProvider);
-
-    // Check if the current meal is a favorite.
     final isFavorite = favoriteMeals.contains(meal);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(meal.title), // Title of the app bar.
+        title: Text(meal.title),
         actions: [
           IconButton(
             onPressed: () {
-              // Toggle the favorite status of the meal.
               final wasAdded = ref
                   .read(favoriteMealsProvider.notifier)
                   .toggleMealFavoriteStatus(meal);
@@ -59,7 +56,6 @@ class MealDetailsScreen extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Display the meal image with a hero animation.
             Hero(
               tag: meal.id,
               child: Image.network(
@@ -70,7 +66,6 @@ class MealDetailsScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 14),
-            // Display the ingredients section.
             Text(
               'Ingredients',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -87,7 +82,6 @@ class MealDetailsScreen extends ConsumerWidget {
                 ),
               ),
             const SizedBox(height: 24),
-            // Display the steps section.
             Text(
               'Steps',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -110,6 +104,18 @@ class MealDetailsScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                ref.read(shoppingCartProvider.notifier).addIngredients(meal.ingredients);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Ingredients added to shopping cart.'),
+                  ),
+                );
+              },
+              child: const Text('Add Ingredients to Shopping Cart'),
+            ),
           ],
         ),
       ),

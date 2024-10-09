@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/pages/shopping_cart.dart';
 
-// A widget that represents the main navigation drawer.
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key, required this.onSelectScreen});
 
-  final void Function(String identifier) onSelectScreen; // Callback for screen selection.
+  final void Function(String identifier) onSelectScreen;
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
-          // Drawer header with a gradient background and title.
           DrawerHeader(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -44,7 +43,6 @@ class MainDrawer extends StatelessWidget {
               ],
             ),
           ),
-          // List tile for navigating to the meals screen.
           ListTile(
             leading: Icon(
               Icons.restaurant,
@@ -59,10 +57,9 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              onSelectScreen('meals'); // Trigger the callback with 'meals' identifier.
+              onSelectScreen('meals');
             },
           ),
-          // List tile for navigating to the filters screen.
           ListTile(
             leading: Icon(
               Icons.settings,
@@ -77,7 +74,28 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              onSelectScreen('filters'); // Trigger the callback with 'filters' identifier.
+              onSelectScreen('filters');
+            },
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.shop,
+              size: 26,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            title: Text(
+              'Shopping Cart',
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+                fontSize: 24,
+              ),
+            ),
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (ctx) => const ShoppingCartScreen(),
+                ),
+              );
             },
           ),
         ],
